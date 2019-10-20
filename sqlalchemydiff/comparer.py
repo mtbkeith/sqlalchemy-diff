@@ -6,7 +6,7 @@ from .util import (
 )
 
 
-def compare(left_uri, right_uri, ignores=None, ignores_sep=None):
+def compare(left_uri, right_uri, ignores=None, ignores_sep=None, left_schema=None, right_schema=None):
     """Compare two databases, given two URIs.
 
     Compare two databases, ignoring whatever is specified in `ignores`.
@@ -82,7 +82,7 @@ def compare(left_uri, right_uri, ignores=None, ignores_sep=None):
     """
     ignore_manager = IgnoreManager(ignores, separator=ignores_sep)
 
-    left_inspector, right_inspector = _get_inspectors(left_uri, right_uri)
+    left_inspector, right_inspector = _get_inspectors(left_uri, left_schema, right_uri, right_schema)
 
     tables_info = _get_tables_info(
         left_inspector, right_inspector, ignore_manager.ignore_tables)
@@ -105,9 +105,9 @@ def compare(left_uri, right_uri, ignores=None, ignores_sep=None):
     return result
 
 
-def _get_inspectors(left_uri, right_uri):
-    left_inspector = InspectorFactory.from_uri(left_uri)
-    right_inspector = InspectorFactory.from_uri(right_uri)
+def _get_inspectors(left_uri, left_schema, right_uri, right_schema):
+    left_inspector = InspectorFactory.from_uri(left_uri, left_schema)
+    right_inspector = InspectorFactory.from_uri(right_uri, right_schema)
     return left_inspector, right_inspector
 
 

@@ -23,14 +23,14 @@ tables from two databases.  It's meant for internal use. """
 class InspectorFactory(object):
 
     """Create a :func:`sqlalchemy.inspect` instance for a given URI. """
+    _schema = None
 
     @classmethod
     def from_uri(cls, uri, schema_name=None):
+        _schema = schema_name
         engine = create_engine(uri, connect_args={'options': '-csearch_path={}'.format(schema_name)})
         inspector = inspect(engine)
         print(inspector.default_schema_name)
-        if schema_name:
-            inspector.default_schema_name = schema_name
         return inspector
 
 

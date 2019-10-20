@@ -134,7 +134,7 @@ def _get_tables(left_inspector, right_inspector, ignore_tables):
 
 
 def _get_tables_names(inspector, ignore_tables):
-    return sorted(set(inspector.get_table_names()) - ignore_tables)
+    return sorted(set(inspector.get_table_names(inspector.schema)) - ignore_tables)
 
 
 def _get_tables_diff(tables_left, tables_right):

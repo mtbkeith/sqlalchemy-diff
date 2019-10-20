@@ -28,6 +28,9 @@ class InspectorFactory(object):
     def from_uri(cls, uri, schema_name=None):
         engine = create_engine(uri, connect_args={'options': '-csearch_path={}'.format(schema_name)})
         inspector = inspect(engine)
+        print(inspector.default_schema_name)
+        if schema_name:
+            inspector.default_schema_name = schema_name
         return inspector
 
 
